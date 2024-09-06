@@ -1,0 +1,30 @@
+{
+    "cod"   :   "CON-000002",
+    "dni"   :   "41653328",
+    "nombre" : "Nieto Leandro Martin",
+    "estado" : "1",
+    "fecha_creacion" : "2024-03-26 12:30:55",
+    "motivo" : "Las lapiceras anteriores se reventaron.",
+    "observaciones" : "",
+    "concepto"  :   [
+        {
+            "cant" : 10,
+            "prod" : "Lapiceras BIC negras"
+        },
+        {
+            "cant" : 1,
+            "prod" : "Impresora"
+        }
+    ],
+    "area" : "Contabilidad",
+    "seguimiento" : [
+        {
+            "estado" : "0",
+            "fecha_cambio" : "2024-03-27 12:44:21"
+        },
+        {
+            "estado" : "1",
+            "fecha_cambio" : "2024-03-27 12:44:30"
+        }
+    ]
+}

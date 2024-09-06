@@ -1,0 +1,62 @@
+{
+    "cod"   :   "CON-000004",
+    "dni"   :   "41653328",
+    "nombre" : "Nieto Leandro Martin",
+    "estado" : "10",
+    "fecha_creacion" : "2024-03-28 15:40:15",
+    "motivo" : "Necesidad de elementos de escritura e impresion",
+    "observaciones" : "",
+    "concepto"  :   [
+        {
+            "cant" : 2,
+            "prod" : "Resma Hojas Oficio"
+        },
+        {
+            "cant" : 4,
+            "prod" : "Portapapeles"
+        }
+    ],
+    "area" : "Contabilidad",
+    "seguimiento" : [
+        {
+            "estado" : "0",
+            "fecha_cambio" : "2024-03-28 13:44:21"
+        },
+        {
+            "estado" : "1",
+            "fecha_cambio" : "2024-03-28 13:44:40"
+        },
+        {
+            "estado" : "2",
+            "fecha_cambio" : "2024-03-28 13:48:08"
+        },
+        {
+            "estado" : "3",
+            "fecha_cambio" : "2024-03-28 13:50:21"
+        },
+        {
+            "estado" : "4",
+            "fecha_cambio" : "2024-03-28 14:05:30"
+        },
+        {
+            "estado" : "5",
+            "fecha_cambio" : "2024-03-28 14:30:20"
+        },
+        {
+            "estado" : "7",
+            "fecha_cambio" : "2024-03-28 14:30:30"
+        },
+        {
+            "estado" : "8",
+            "fecha_cambio" : "2024-03-28 14:30:35"
+        },
+        {
+            "estado" : "9",
+            "fecha_cambio" : "2024-03-28 14:30:40"
+        },
+        {
+            "estado" : "10",
+            "fecha_cambio" : "2024-03-28 14:50:35"
+        }
+    ]
+}

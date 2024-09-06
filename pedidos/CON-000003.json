@@ -1,0 +1,66 @@
+{
+    "cod"   :   "CON-000003",
+    "dni"   :   "41653328",
+    "nombre" : "Nieto Leandro Martin",
+    "estado" : "8",
+    "fecha_creacion" : "2024-03-27 12:44:15",
+    "motivo" : "Necesidad de elementos de escritura e impresion",
+    "observaciones" : "",
+    "concepto"  :   [
+        {
+            "cant" : 2,
+            "prod" : "Toner impresora negro"
+        },
+        {
+            "cant" : 4,
+            "prod" : "Lapiceras BIC rojas"
+        },
+        {
+            "cant" : 2,
+            "prod" : "Lapiceras BIC verdes"
+        },
+        {
+            "cant" : 2,
+            "prod" : "Correctores"
+        },
+        {
+            "cant" : 5,
+            "prod" : "Resma hojas A4"
+        }
+    ],
+    "area" : "Contabilidad",
+    "seguimiento" : [
+        {
+            "estado" : "0",
+            "fecha_cambio" : "2024-03-27 12:44:21"
+        },
+        {
+            "estado" : "1",
+            "fecha_cambio" : "2024-03-27 12:44:40"
+        },
+        {
+            "estado" : "2",
+            "fecha_cambio" : "2024-03-27 12:48:08"
+        },
+        {
+            "estado" : "3",
+            "fecha_cambio" : "2024-03-27 12:50:21"
+        },
+        {
+            "estado" : "4",
+            "fecha_cambio" : "2024-03-27 13:05:30"
+        },
+        {
+            "estado" : "5",
+            "fecha_cambio" : "2024-03-27 13:30:20"
+        },
+        {
+            "estado" : "7",
+            "fecha_cambio" : "2024-03-27 13:30:30"
+        },
+        {
+            "estado" : "8",
+            "fecha_cambio" : "2024-03-27 13:30:35"
+        }
+    ]
+}

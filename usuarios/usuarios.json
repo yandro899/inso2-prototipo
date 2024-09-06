@@ -1,0 +1,47 @@
+[
+    {
+        "name" : "Medina Javier Antonio",
+        "dni" : "37632786",
+        "pass" : "12345",
+        "rol" : 2,
+        "area" : 0,
+        "legajo" : "12314",
+        "mail" : "37632786@fi.unju.edu.ar"
+    },
+    {
+        "name" : "Lauret Jesus Abel Dario",
+        "dni" : "41995688",
+        "pass" : "12345",
+        "rol" : 1,
+        "area" : 0,
+        "legajo" : "12313",
+        "mail" : "41995688@fi.unju.edu.ar"
+    },
+    {
+        "name" : "Degroot Tavish",
+        "dni" : "15487596",
+        "pass" : "12345",
+        "rol" : 1,
+        "area" : 1,
+        "legajo" : "12315",
+        "mail" : "36929017@fi.unju.edu.ar"
+    },
+    {
+        "name" : "Nieto Leandro Martin",
+        "dni" : "41653328",
+        "pass" : "12345",
+        "rol" : 0,
+        "area" : 0,
+        "legajo" : "12312",
+        "mail" : "nleandro@juarg.com"
+    },
+    {
+        "name" : "Tapia Jorge Daniel",
+        "dni" : "36929017",
+        "pass" : "12345",
+        "rol" : 0,
+        "area" : 1,
+        "legajo" : "12315",
+        "mail" : "36929017@fi.unju.edu.ar"
+    }
+]

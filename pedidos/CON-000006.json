@@ -1,0 +1,42 @@
+{
+    "cod"   :   "CON-000006",
+    "dni"   :   "41653328",
+    "nombre" : "Nieto Leandro Martin",
+    "estado" : "4",
+    "fecha_creacion" : "2024-03-29 10:20:05",
+    "motivo" : "Falta de materiales básicos.\nNECESIDAD URGENTE.",
+    "observaciones" : "",
+    "concepto"  :   [
+        {
+            "cant" : 2,
+            "prod" : "Mesa de escritorio"
+        },
+        {
+            "cant" : 2,
+            "prod" : "Silla de oficina"
+        }
+    ],
+    "area" : "Contabilidad",
+    "seguimiento" : [
+        {
+            "estado" : "0",
+            "fecha_cambio" : "2024-03-29 10:55:48"
+        },
+        {
+            "estado" : "1",
+            "fecha_cambio" : "2024-03-29 11:15:48"
+        },
+        {
+            "estado" : "2",
+            "fecha_cambio" : "2024-03-29 11:25:55"
+        },
+        {
+            "estado" : "3",
+            "fecha_cambio" : "2024-03-29 11:27:48"
+        },
+        {
+            "estado" : "4",
+            "fecha_cambio" : "2024-03-29 11:30:15"
+        }
+    ]
+}
