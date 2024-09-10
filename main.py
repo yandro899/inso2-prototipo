@@ -1,3 +1,10 @@
-# hacer xd
+from inicio_sesion import VentanaInicioSesion
+from globales import g_ListaUsuarios
 
-# Hay que codificar las ventanas en archivos separados para poder ordenar mejor el codigo
+g_ListaUsuarios.CargarUsuariosDB()
+
+if VentanaInicioSesion():
+    print("se inicio sesion")
+    #VentanaPrincipal()
+else:
+    print("no")

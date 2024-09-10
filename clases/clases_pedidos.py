@@ -22,7 +22,7 @@ class PedidoAdquisicion:
         return self.__fechaHoraGen
     
     @property
-    def GetUsuario(self):
+    def Usuario(self):
         """Obtener usuario que creo el pedido de adquisicion"""
         return self.__usuario
     
@@ -101,7 +101,7 @@ class ListaPedidos:
         """Agrega un pedido a la lista"""
         self.__pedidos.append(pedido)
     
-    def BuscarPedidoAdquision(self, id: str) -> PedidoAdquisicion | None:
+    def BuscarPedidoAdquision(self, id: str) -> PedidoAdquisicion:
         """
         Buscar pedido por ID.
 
@@ -111,7 +111,7 @@ class ListaPedidos:
             if not isinstance(pedido, PedidoAdquisicion):
                 continue
             
-            if pedido.Dni == id:
+            if pedido.Id == id:
                 return pedido
         
         return None

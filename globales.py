@@ -5,7 +5,7 @@ g_ListaUsuarios = ListaUsuarios()
 """Objeto global ListaUsuarios"""
 g_ListaPedidos = ListaPedidos()
 """Objeto global ListaPedidos"""
-g_UsuarioActual = Usuario()
+g_UsuarioActual = Usuario.Vacio()
 """Usuario actual"""
 
 def setUsuarioActual(usuario: Usuario):

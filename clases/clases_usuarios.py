@@ -3,14 +3,6 @@ class Usuario:
     Clase que aloja a un usuario
     """
 
-    def __init__(self) -> None:
-        self.__dni = ""
-        self.__passw = ""
-        self.__nombre = ""
-        self.__rol = 0
-        self.__area = 0
-        self.__legajo = ""
-        self.__mail = ""
 
     def __init__(self, dni: str, passw: str, nombre: str, rol: int, area: int, legajo: str, mail: str) -> None:
         self.__dni = dni
@@ -21,6 +13,15 @@ class Usuario:
         self.__legajo = legajo
         self.__mail = mail
 
+    @classmethod
+    def Vacio(self) -> None:
+        self.__dni = ""
+        self.__passw = ""
+        self.__nombre = ""
+        self.__rol = 0
+        self.__area = 0
+        self.__legajo = ""
+        self.__mail = ""
     @property
     def Dni(self):
         """DNI del usuario"""
@@ -99,7 +100,7 @@ class ListaUsuarios:
             return False
 
     
-    def BuscarUsuarioPorDNI(self, dni: str) -> Usuario | None:
+    def BuscarUsuarioPorDNI(self, dni: str) -> Usuario:
         """
         Busca un usuario por DNI.
 
@@ -117,5 +118,14 @@ class ListaUsuarios:
     def CargarUsuariosDB(self):
         """
         TODO: debe cargar todos los usuarios de alguna base de datos.
+        En este caso lo cargamos desde los json xd.
         """
-        pass
+        import json
+
+        f = open("usuarios/usuarios.json")
+        usersjson = json.load(f)
+        self.__usuarios.clear()
+        
+        for user in usersjson:
+            userclass = Usuario(user["dni"], user["pass"], user["name"], int(user["rol"]), int(user["area"]), user["legajo"], user["mail"])
+            self.__usuarios.append(userclass)
