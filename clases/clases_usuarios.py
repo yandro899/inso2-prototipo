@@ -14,14 +14,10 @@ class Usuario:
         self.__mail = mail
 
     @classmethod
-    def Vacio(self) -> None:
-        self.__dni = ""
-        self.__passw = ""
-        self.__nombre = ""
-        self.__rol = 0
-        self.__area = 0
-        self.__legajo = ""
-        self.__mail = ""
+    def Vacio(self):
+        return self("","","",0,0,"","")
+
+
     @property
     def Dni(self):
         """DNI del usuario"""
@@ -86,8 +82,9 @@ class ListaUsuarios:
         """
         self.__usuarios.append(usuario)
 
-    def AutenticarUsuario(self, dni: str, passw: str):
+    def AutenticarUsuario(self, dni: str, passw: str) -> bool:
         from globales import setUsuarioActual
+
         usuario = self.BuscarUsuarioPorDNI(dni)
         
         if usuario is None:

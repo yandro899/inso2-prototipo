@@ -1,5 +1,4 @@
-from clases.clases_usuarios import Usuario
-from globales import g_UsuarioActual, g_ListaUsuarios, setUsuarioActual
+from globales import g_UsuarioActual, g_ListaUsuarios
 import FreeSimpleGUI as sg
 
 """
@@ -37,6 +36,8 @@ def RecuperarCuenta():
     sino None si se cierra la ventana.
 """
 def VentanaInicioSesion() -> bool:
+    global g_UsuarioActual
+
     layout = [
         [sg.T("SI.GE.AD.")],
         [sg.Text("DNI: ") ,sg.Input(key="in_userdni")],
@@ -66,11 +67,9 @@ def VentanaInicioSesion() -> bool:
                 print("El usuario o la contraseña son incorrectos.")
                 continue
 
-            usuario = g_ListaUsuarios.BuscarUsuarioPorDNI(dni)
-            setUsuarioActual(usuario)
             success = True
 
-            print("Hola {}. Tu DNI es {}.".format(usuario.Nombre, usuario.Dni))
+            print("Hola {}. Tu DNI es {}.".format(g_UsuarioActual.Nombre, g_UsuarioActual.Dni))
             break
 
     window.close()
