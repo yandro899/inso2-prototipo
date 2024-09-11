@@ -1,5 +1,6 @@
 import FreeSimpleGUI as sg
 from clases.clases_utiles import TiposUsuarios
+from index import GoToWindow
 from defs import GetUserMenuBar
 
 def VentanaPrincipal():
@@ -47,10 +48,7 @@ def VentanaPrincipal():
 
     window.close()
 
-    # if new_window == "np":
-    #     C.NuevoPedido()
-    # elif new_window == "rp":
-    #     P.VerPedidos()
+    GoToWindow(new_window)
     # elif new_window == "vprod":
     #     C.VerProductos()
     # elif new_window == "dprod":

@@ -1,4 +1,3 @@
-from globales import g_UsuarioActual, g_ListaUsuarios
 import FreeSimpleGUI as sg
 
 """
@@ -36,8 +35,8 @@ def RecuperarCuenta():
     sino None si se cierra la ventana.
 """
 def VentanaInicioSesion() -> bool:
-    global g_UsuarioActual
-
+    from globales import g_UsuarioActual, g_ListaUsuarios
+    
     layout = [
         [sg.T("SI.GE.AD.")],
         [sg.Text("DNI: ") ,sg.Input(key="in_userdni")],
