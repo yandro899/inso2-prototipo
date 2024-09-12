@@ -50,7 +50,6 @@ def CrearPedido():
     GoToWindow(new_window)
 
 def VerPedidos():
-    import os
     from globales import g_ListaPedidos
 
     g_ListaPedidos.CargarPedidosDB()
@@ -96,31 +95,34 @@ def VerPedidos():
     GoToWindow(new_window)
 
 def RevisarPedido(cod):
-    import json
+    from clases.clases_pedidos import PedidoAdquisicion, Concepto, Seguimiento
+    from globales import g_ListaPedidos
 
-    f = open("pedidos/{}.json".format(cod))
-    pedidojson = json.load(f)
+    pedido = g_ListaPedidos.BuscarPedidoAdquision(cod)
 
     layout_01 = [
         [sg.Text("DETALLE PEDIDO")],
-        [sg.Text("Fecha creacion: {}".format(pedidojson["fecha_creacion"]))],
-        [sg.Text("Código: {}".format(pedidojson["cod"]))],
-        [sg.Text("DNI: {}".format(pedidojson["dni"]))],
-        [sg.Text("Apellido y nombre: {}".format(pedidojson["nombre"]))],
-        [sg.Text("Estado actual: {}".format(D.GetEstadoStr(pedidojson["estado"])))],
-        [sg.Text("Area actual: {}".format(pedidojson["area"]))],
+        [sg.Text("Fecha creacion: {}".format(pedido.FechaGeneracion))],
+        [sg.Text("Código: {}".format(pedido.Id))],
+        [sg.Text("DNI: {}".format(pedido.Usuario.Dni))],
+        [sg.Text("Apellido y nombre: {}".format(pedido.Usuario.Nombre))],
+        [sg.Text("Estado actual: {}".format(D.GetEstadoStr(pedido.UltimoSeguimiento.Estado)))],
+        [sg.Text("Area actual: {}".format("Contabilidad"))],
     ]
 
     layout_02 = [
         [sg.Text("MOTIVO")],
-        [sg.Multiline(pedidojson["motivo"], disabled=True, s=(None, 5))],
+        [sg.Multiline(pedido.Motivo, disabled=True, s=(None, 5))],
         [sg.Text("OBSERVACIONES")],
-        [sg.Multiline(pedidojson["observaciones"], disabled=True, s=(None, 5))]
+        [sg.Multiline(pedido.Observaciones, disabled=True, s=(None, 5))]
     ]
 
     concepto = []
-    for prod in pedidojson["concepto"]:
-        concepto.append([prod["cant"], prod["prod"]])
+    for prod in pedido.ListaConceptos:
+        if not isinstance(prod, Concepto):
+            continue
+
+        concepto.append([prod.CantidadProducto, prod.NombreProducto])
 
     # Adm cont
     # si 0 o 1 Anular
@@ -137,11 +139,11 @@ def RevisarPedido(cod):
     buttons = []
 
     if TiposUsuarios.EsDeContabilidad() or TiposUsuarios.EsSecretario():
-        if TiposUsuarios.EsSecretario() and pedidojson["estado"] == "4":
+        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado == "4":
             buttons = [sg.Button("Aprobar", k="btn_aprobar"), sg.Button("Anular", k="btn_anular")]
-        elif TiposUsuarios.EsAdministrativo() and pedidojson["estado"] in ["0", "1"]:
+        elif TiposUsuarios.EsAdministrativo() and pedido.UltimoSeguimiento.Estado in ["0", "1"]:
             buttons = [sg.Button("Cancelar", k="btn_cancelar")]
-        elif TiposUsuarios.EsDirectivo() and pedidojson["estado"] == "1":
+        elif TiposUsuarios.EsDirectivo() and pedido.UltimoSeguimiento.Estado == "1":
             buttons = [sg.Button("Preaprobar", k="btn_preap"), sg.Button("Anular", k="btn_anular")]
 
     layout_03 = [
@@ -160,38 +162,40 @@ def RevisarPedido(cod):
 
     seguimiento = []
     color_seguimiento = ["b", "b", "b", "b", "b", "b"]
-    for seg in pedidojson["seguimiento"]:
+    for seg in pedido.ListaSeguimientos:
+        if not isinstance(seg, Seguimiento):
+            continue
 
-        if seg["estado"] == "11":
+        if seg.Estado == "11":
             color_seguimiento[0] = "c"
             break
 
-        if seg["estado"] == "6":
+        if seg.Estado == "6":
             color_seguimiento[0] = "c"
             color_seguimiento[1] = "c"
             color_seguimiento[2] = "c"
             break
 
-        if seg["estado"] in ["0", "1", "2"]:
+        if seg.Estado in ["0", "1", "2"]:
             color_seguimiento[0] = "a"
 
-        if seg["estado"] in ["3", "4"]:
+        if seg.Estado in ["3", "4"]:
             color_seguimiento[1] = "a"
 
-        if seg["estado"] in ["5"]:
+        if seg.Estado in ["5"]:
             color_seguimiento[2] = "a"
 
-        if seg["estado"] in ["7", "8"]:
+        if seg.Estado in ["7", "8"]:
             color_seguimiento[3] = "a"
 
-        if seg["estado"] in ["9"]:
+        if seg.Estado in ["9"]:
             color_seguimiento[4] = "a"
 
-        if seg["estado"] in ["10"]:
+        if seg.Estado in ["10"]:
             color_seguimiento[4] = "a"
             color_seguimiento[5] = "a"
 
-        seguimiento.append([D.GetEstadoStr(seg["estado"]), seg["fecha_cambio"]])
+        seguimiento.append([D.GetEstadoStr(seg.Estado), seg.FechaHoraEstado])
 
     if TiposUsuarios.EsDeContabilidad() or TiposUsuarios.EsSecretario():
         parte_baja = [
@@ -217,7 +221,7 @@ def RevisarPedido(cod):
         parte_baja
     ]
 
-    window = sg.Window("Ver pedido {}".format(pedidojson["cod"]), layout=layout)
+    window = sg.Window("Ver pedido {}".format(pedido.Id), layout=layout)
 
     while True:
         event, values = window.read()

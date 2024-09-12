@@ -1,4 +1,3 @@
-
 def GoToWindow(new_window: str):
     from pedidos import VerPedidos, CrearPedido
     from ventana_principal import VentanaPrincipal

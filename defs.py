@@ -1,3 +1,5 @@
+VENTANA_PRINCIPAL = "vp"
+
 def GetUserMenuBar() -> list: 
     from globales import g_UsuarioActual
     return [

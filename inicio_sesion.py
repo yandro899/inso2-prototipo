@@ -1,13 +1,13 @@
 import FreeSimpleGUI as sg
 
-"""
-    Ventana para recuperar la clave de usuario.
-    Por ahora no va a funcionar. Se va a reservar para el otro
-    cuatrimestre.
-
-    Entrega: Nada
-"""
 def RecuperarCuenta():
+    """
+        Ventana para recuperar la clave de usuario.
+        Por ahora no va a funcionar. Se va a reservar para el otro
+        cuatrimestre.
+
+        Entrega: Nada
+    """
     layout = [
         [sg.T("Recuperar cuenta")],
         [sg.Text("DNI: ") ,sg.Input(key="in_userdni_rec")],
@@ -27,16 +27,16 @@ def RecuperarCuenta():
 
     window.close()
 
-"""
-    Ventana que inicia sesion de usuario. Por ahora va a funcionar por solicitudes POST
-    usando archivos json.
-
-    Entrega: Si inicia sesion, un diccionario con los valores necesarios del usuario,
-    sino None si se cierra la ventana.
-"""
 def VentanaInicioSesion() -> bool:
+    """
+        Ventana que inicia sesion de usuario. Por ahora va a funcionar por solicitudes POST
+        usando archivos json.
+
+        Entrega: Si inicia sesion, un diccionario con los valores necesarios del usuario,
+        sino None si se cierra la ventana.
+    """
     from globales import g_UsuarioActual, g_ListaUsuarios
-    
+
     layout = [
         [sg.T("SI.GE.AD.")],
         [sg.Text("DNI: ") ,sg.Input(key="in_userdni")],
