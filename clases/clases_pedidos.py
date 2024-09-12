@@ -104,6 +104,13 @@ class Concepto:
         """Cantidad del producto"""
         return self.__cantidad
     
+    def ConceptoADict(self) -> str:
+        """Exporta el contenido en formato diccionario"""
+        return {
+            "cant" : self.__cantidad,
+            "prod" : self.__nombreProducto
+        }
+    
 
 class Seguimiento:
     """
@@ -128,6 +135,13 @@ class Seguimiento:
     def Pedido(self):
         """Pedido relacionado a este seguimiento"""
         return self.__pedido
+    
+    def SeguimientoADict(self) -> str:
+        """Exporta el contenido en formato diccionario"""
+        return {
+            "estado" : self.__estado,
+            "fecha_cambio" : self.__fechaHoraEstado
+        }
 
 class ListaPedidos:
     """
@@ -174,6 +188,56 @@ class ListaPedidos:
             
         return contenido
 
+    def ObtenerNuevoIDPedido(self) -> str:
+        """
+        Devuelve el ultimo ID de pedido de adquisicion disponible para usar.
+        """
+        import os
+
+        # Iterar sobre todos los archivos en la carpeta
+        carpeta = "pedidos"
+        cant = len(os.listdir(carpeta)) + 1
+        cad = str(cant)
+        while len(cad) < 6:
+            cad = "0{}".format(cad)
+
+        cad = "CON-{}".format(cad)
+        return cad
+    
+    def GuardarPedidoADB(self, pedido: PedidoAdquisicion):
+        """
+        Funcion que guarda el pedido en la base de datos.
+        """
+        import json
+
+        pedido_json = {
+            "cod"   :   pedido.Id,
+            "dni"   :   pedido.Usuario.Dni,
+            "nombre" : pedido.Usuario.Nombre,
+            "fecha_creacion" : pedido.FechaGeneracion,
+            "motivo" : pedido.Motivo,
+            "observaciones" : pedido.Observaciones,
+            "concepto"  :   [],
+            "seguimiento" : []
+        }
+
+        for concepto in pedido.ListaConceptos:
+            if not isinstance(concepto, Concepto):
+                continue
+
+            pedido_json["concepto"].append(concepto.ConceptoADict())
+
+        for seguimiento in pedido.ListaSeguimientos:
+            if not isinstance(seguimiento, Seguimiento):
+                continue
+
+            pedido_json["seguimiento"].append(seguimiento.SeguimientoADict())
+
+        json_object = json.dumps(pedido_json, indent=4)
+
+        # Writing to sample.json
+        with open("pedidos/{}.json".format(pedido.Id), "w") as outfile:
+            outfile.write(json_object)
 
     def CargarPedidosDB(self):
         """

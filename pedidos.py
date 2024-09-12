@@ -4,11 +4,13 @@ from clases.clases_utiles import TiposUsuarios
 import defs as D
 
 def CrearPedido():
-    from globales import g_UsuarioActual
+    from datetime import datetime
+    from globales import g_UsuarioActual, g_ListaPedidos
+    from clases.clases_pedidos import PedidoAdquisicion, Concepto, Seguimiento
 
     layout_01 = [
         [sg.Text("Datos del solicitante*:"), sg.Input(key="in_username", disabled=True, default_text="{} {}".format(g_UsuarioActual.Dni, g_UsuarioActual.Nombre))],
-        [sg.Text("Código pedido*:"), sg.Input(key="in_codpedido")],
+        [sg.Text("Código pedido*:"), sg.Input(key="in_codpedido", disabled=True, default_text=g_ListaPedidos.ObtenerNuevoIDPedido())],
         [sg.Text("Sección*:"), sg.Input(key="Contaduria", disabled=True, default_text="Contaduria")],
         [sg.Text("Motivo*:")],
         [sg.Multiline(key="in_motivo", s=(None, 10))],
@@ -27,7 +29,7 @@ def CrearPedido():
     ]
     
     layout = [
-        [sg.Menu([["Inicio", ["Menu Principal", "Cerrar sesión", "Salir"]], ["Pedidos de adquisición", ["Crear nuevo pedido", "Revisar pedidos"]], ["Usuarios", ["Ver usuarios"]]])],
+        [sg.Menu(D.GetUserMenuBar())],
         [sg.T("Nuevo Pedido")],
         [sg.Column(layout_01, p=0, vertical_alignment="top"), sg.VerticalSeparator(), sg.Column(layout_02, p=0, vertical_alignment="top")]
     ]
@@ -39,6 +41,31 @@ def CrearPedido():
     while True:
         event, values = window.read()
         if event == sg.WINDOW_CLOSED or event == 'Salir':
+            break
+
+        if event == "btn_generarperdido":
+            # Primero crear el pedido
+            pedido = PedidoAdquisicion(g_ListaPedidos.ObtenerNuevoIDPedido(), datetime.now().strftime("%d-%m-%Y %H:%M:%S"), g_UsuarioActual.Dni, values["in_motivo"])
+            pedido.Observaciones = values["in_observaciones"]
+            # crear un seguimiento
+            pedido.ListaSeguimientos.append(Seguimiento(
+                1, 
+                datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
+                pedido
+            ))
+            # guardar conceptos
+            for i in range(1,6):
+                if len(values["in_c{}".format(i)]) != 0 and len(values["in_p{}".format(i)]) != 0:
+                    pedido.ListaConceptos.append(Concepto(
+                        values["in_p{}".format(i)],
+                        int(values["in_c{}".format(i)])
+                    ))
+            # luego guardarlo en la lista
+            g_ListaPedidos.AgregarPedidoALista(pedido)
+            # guardarlo en DB
+            g_ListaPedidos.GuardarPedidoADB(pedido)
+            # mostrar el pedido
+            new_window = "rp"
             break
 
         if event == "Menu Principal":

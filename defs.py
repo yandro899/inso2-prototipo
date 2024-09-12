@@ -9,10 +9,10 @@ def GetUserMenuBar() -> list:
         [g_UsuarioActual.Nombre, ["DNI {}".format(g_UsuarioActual.Dni)]]
         ]
 
-def GetEstadoStr(cod):
+def GetEstadoStr(cod: int):
     import json
 
     f = open("defs/estados.json")
     estados = json.load(f)
 
-    return estados[cod]
+    return estados[str(cod)]
