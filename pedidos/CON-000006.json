@@ -19,23 +19,23 @@
     "area" : "Contabilidad",
     "seguimiento" : [
         {
-            "estado" : "0",
+            "estado" : 0,
             "fecha_cambio" : "2024-03-29 10:55:48"
         },
         {
-            "estado" : "1",
+            "estado" : 1,
             "fecha_cambio" : "2024-03-29 11:15:48"
         },
         {
-            "estado" : "2",
+            "estado" : 2,
             "fecha_cambio" : "2024-03-29 11:25:55"
         },
         {
-            "estado" : "3",
+            "estado" : 3,
             "fecha_cambio" : "2024-03-29 11:27:48"
         },
         {
-            "estado" : "4",
+            "estado" : 4,
             "fecha_cambio" : "2024-03-29 11:30:15"
         }
     ]

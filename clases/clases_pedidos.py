@@ -257,6 +257,7 @@ class ListaPedidos:
                 f = open(ruta_archivo)
                 pedidojson = json.load(f)
                 pedido = PedidoAdquisicion(pedidojson["cod"], pedidojson["fecha_creacion"], pedidojson["dni"], pedidojson["motivo"])
+                pedido.Observaciones = pedidojson["observaciones"]
 
                 for concepto_json in pedidojson["concepto"]:
                     concepto = Concepto(concepto_json["prod"], concepto_json["cant"])

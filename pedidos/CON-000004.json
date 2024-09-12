@@ -19,43 +19,43 @@
     "area" : "Contabilidad",
     "seguimiento" : [
         {
-            "estado" : "0",
+            "estado" : 0,
             "fecha_cambio" : "2024-03-28 13:44:21"
         },
         {
-            "estado" : "1",
+            "estado" : 1,
             "fecha_cambio" : "2024-03-28 13:44:40"
         },
         {
-            "estado" : "2",
+            "estado" : 2,
             "fecha_cambio" : "2024-03-28 13:48:08"
         },
         {
-            "estado" : "3",
+            "estado" : 3,
             "fecha_cambio" : "2024-03-28 13:50:21"
         },
         {
-            "estado" : "4",
+            "estado" : 4,
             "fecha_cambio" : "2024-03-28 14:05:30"
         },
         {
-            "estado" : "5",
+            "estado" : 5,
             "fecha_cambio" : "2024-03-28 14:30:20"
         },
         {
-            "estado" : "7",
+            "estado" : 7,
             "fecha_cambio" : "2024-03-28 14:30:30"
         },
         {
-            "estado" : "8",
+            "estado" : 8,
             "fecha_cambio" : "2024-03-28 14:30:35"
         },
         {
-            "estado" : "9",
+            "estado" : 9,
             "fecha_cambio" : "2024-03-28 14:30:40"
         },
         {
-            "estado" : "10",
+            "estado" : 10,
             "fecha_cambio" : "2024-03-28 14:50:35"
         }
     ]

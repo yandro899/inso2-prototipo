@@ -43,6 +43,9 @@ def CrearPedido():
         if event == sg.WINDOW_CLOSED or event == 'Salir':
             break
 
+        if values["in_c1"] == "":
+            continue
+
         if event == "btn_generarperdido":
             # Primero crear el pedido
             pedido = PedidoAdquisicion(g_ListaPedidos.ObtenerNuevoIDPedido(), datetime.now().strftime("%d-%m-%Y %H:%M:%S"), g_UsuarioActual.Dni, values["in_motivo"])
@@ -122,7 +125,7 @@ def VerPedidos():
     GoToWindow(new_window)
 
 def RevisarPedido(cod):
-    from clases.clases_pedidos import PedidoAdquisicion, Concepto, Seguimiento
+    from clases.clases_pedidos import Concepto, Seguimiento
     from globales import g_ListaPedidos
 
     pedido = g_ListaPedidos.BuscarPedidoAdquision(cod)
@@ -166,11 +169,11 @@ def RevisarPedido(cod):
     buttons = []
 
     if TiposUsuarios.EsDeContabilidad() or TiposUsuarios.EsSecretario():
-        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado == "4":
+        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado == 4:
             buttons = [sg.Button("Aprobar", k="btn_aprobar"), sg.Button("Anular", k="btn_anular")]
-        elif TiposUsuarios.EsAdministrativo() and pedido.UltimoSeguimiento.Estado in ["0", "1"]:
+        elif TiposUsuarios.EsAdministrativo() and pedido.UltimoSeguimiento.Estado in [0, 1]:
             buttons = [sg.Button("Cancelar", k="btn_cancelar")]
-        elif TiposUsuarios.EsDirectivo() and pedido.UltimoSeguimiento.Estado == "1":
+        elif TiposUsuarios.EsDirectivo() and pedido.UltimoSeguimiento.Estado == 1:
             buttons = [sg.Button("Preaprobar", k="btn_preap"), sg.Button("Anular", k="btn_anular")]
 
     layout_03 = [
@@ -193,32 +196,32 @@ def RevisarPedido(cod):
         if not isinstance(seg, Seguimiento):
             continue
 
-        if seg.Estado == "11":
+        if seg.Estado == 11:
             color_seguimiento[0] = "c"
             break
 
-        if seg.Estado == "6":
+        if seg.Estado == 6:
             color_seguimiento[0] = "c"
             color_seguimiento[1] = "c"
             color_seguimiento[2] = "c"
             break
 
-        if seg.Estado in ["0", "1", "2"]:
+        if seg.Estado in [0, 1, 2]:
             color_seguimiento[0] = "a"
 
-        if seg.Estado in ["3", "4"]:
+        if seg.Estado in [3, 4]:
             color_seguimiento[1] = "a"
 
-        if seg.Estado in ["5"]:
+        if seg.Estado in [5]:
             color_seguimiento[2] = "a"
 
-        if seg.Estado in ["7", "8"]:
+        if seg.Estado in [7, 8]:
             color_seguimiento[3] = "a"
 
-        if seg.Estado in ["9"]:
+        if seg.Estado in [9]:
             color_seguimiento[4] = "a"
 
-        if seg.Estado in ["10"]:
+        if seg.Estado in [10]:
             color_seguimiento[4] = "a"
             color_seguimiento[5] = "a"
 
