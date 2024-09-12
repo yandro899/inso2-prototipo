@@ -49,39 +49,12 @@ def CrearPedido():
 
     GoToWindow(new_window)
 
-def ObtenerPedidoALista(cod) -> list:
-    import json
-
-    f = open(cod)
-    pedidojson = json.load(f)
-    return [
-        "{} {}".format(pedidojson["dni"], pedidojson["nombre"]), 
-        pedidojson["cod"], 
-        D.GetEstadoStr(pedidojson["estado"]), 
-        pedidojson["fecha_creacion"], 
-        "{}x {}...".format(pedidojson["concepto"][0]["cant"], pedidojson["concepto"][0]["prod"]), 
-        pedidojson["area"]
-    ]
-
 def VerPedidos():
     import os
+    from globales import g_ListaPedidos
 
-    contenido = []
-    
-    # Iterar sobre todos los archivos en la carpeta
-    carpeta = "pedidos"
-    for archivo in os.listdir(carpeta):
-        if archivo.endswith('.json'):
-            ruta_archivo = os.path.join(carpeta, archivo)
-            contenido.append(ObtenerPedidoALista(ruta_archivo))
-
-    if (TiposUsuarios.EsDeCompras()):
-        new_contenido = contenido.copy()
-        for prod in contenido:
-            if prod[2] != D.GetEstadoStr("8") and prod[2] != D.GetEstadoStr("9"):
-                new_contenido.remove(prod)
-
-        contenido = new_contenido
+    g_ListaPedidos.CargarPedidosDB()
+    contenido = g_ListaPedidos.FormatearParaMuestra()
 
     layout = [
         [sg.Menu(D.GetUserMenuBar())],
