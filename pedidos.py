@@ -48,12 +48,12 @@ def CrearPedido():
 
         if event == "btn_generarperdido":
             # Primero crear el pedido
-            pedido = PedidoAdquisicion(g_ListaPedidos.ObtenerNuevoIDPedido(), datetime.now().strftime("%d-%m-%Y %H:%M:%S"), g_UsuarioActual.Dni, values["in_motivo"])
+            pedido = PedidoAdquisicion(g_ListaPedidos.ObtenerNuevoIDPedido(), datetime.now().strftime("%Y-%m-%d %H:%M:%S"), g_UsuarioActual.Dni, values["in_motivo"])
             pedido.Observaciones = values["in_observaciones"]
             # crear un seguimiento
             pedido.ListaSeguimientos.append(Seguimiento(
                 1, 
-                datetime.now().strftime("%d-%m-%Y %H:%M:%S"), 
+                datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
                 pedido
             ))
             # guardar conceptos
@@ -84,6 +84,25 @@ def VerPedidos():
 
     g_ListaPedidos.CargarPedidosDB()
     contenido = g_ListaPedidos.FormatearParaMuestra()
+
+    if (TiposUsuarios.EsDirectivo() and TiposUsuarios.EsDeContabilidad()):
+        new_contenido = contenido.copy()
+        for prod in contenido:
+            if prod[2] != D.GetEstadoStr("1"):
+                new_contenido.remove(prod)
+        contenido = new_contenido
+    elif (TiposUsuarios.EsDeCompras()):
+        new_contenido = contenido.copy()
+        for prod in contenido:
+            if prod[2] != D.GetEstadoStr("8") and prod[2] != D.GetEstadoStr("9") and prod[2] != D.GetEstadoStr("10"):
+                new_contenido.remove(prod)
+        contenido = new_contenido
+    elif (TiposUsuarios.EsSecretario()):
+        new_contenido = contenido.copy()
+        for prod in contenido:
+            if prod[2] != D.GetEstadoStr("5"):
+                new_contenido.remove(prod)
+        contenido = new_contenido
 
     layout = [
         [sg.Menu(D.GetUserMenuBar())],
@@ -257,5 +276,15 @@ def RevisarPedido(cod):
         event, values = window.read()
         if event == sg.WINDOW_CLOSED:
             break
+
+        if event == "btn_preap":
+            result = sg.popup_ok_cancel("¿Estas seguro de preaprobar este pedido?")
+
+            if result == None or result == "Cancel":
+                break
+            elif result == "OK":
+                pedido.PreaprobarPedido()
+                g_ListaPedidos.GuardarPedidoADB(pedido)
+                sg.popup("¡Pedido preaprobado con exito!")
 
     window.close()
