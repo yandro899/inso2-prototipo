@@ -111,6 +111,22 @@ class ListaUsuarios:
                 return usuario
         
         return None
+    
+    def FormatearParaMuestra(self) -> list:
+        import defs as D
+        contenido = []
+        for usr in self.__usuarios:
+            if not isinstance(usr, Usuario):
+                continue
+
+            contenido.append({
+                "dni" : usr.Dni, 
+                "name" : usr.Nombre, 
+                "rol" : usr.Rol, 
+                "area" : usr.Area
+                })
+            
+        return contenido
 
     def CargarUsuariosDB(self):
         """
