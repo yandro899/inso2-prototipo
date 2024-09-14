@@ -1,0 +1,32 @@
+{
+    "cod": "CON-000009",
+    "dni": "41653328",
+    "nombre": "Nieto Leandro Martin",
+    "fecha_creacion": "2024-09-12 21:36:58",
+    "motivo": "kjdsnjudsfdsfknjdsfnjkldfsa",
+    "observaciones": "dfsgdsgdfg",
+    "concepto": [
+        {
+            "cant": 1,
+            "prod": "Lapiceras"
+        },
+        {
+            "cant": 4,
+            "prod": "Gomas de borrar"
+        },
+        {
+            "cant": 2,
+            "prod": "Impresoras"
+        }
+    ],
+    "seguimiento": [
+        {
+            "estado": 1,
+            "fecha_cambio": "2024-09-12 21:36:58"
+        },
+        {
+            "estado": 2,
+            "fecha_cambio": "2024-09-12 21:38:13"
+        }
+    ]
+}

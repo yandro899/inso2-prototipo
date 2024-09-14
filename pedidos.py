@@ -287,4 +287,14 @@ def RevisarPedido(cod):
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido preaprobado con exito!")
 
+        if event == "btn_anular":
+            result = sg.popup_ok_cancel("¿Estas seguro de anular este pedido?")
+
+            if result == None or result == "Cancel":
+                break
+            elif result == "OK":
+                pedido.AnularPedido()
+                g_ListaPedidos.GuardarPedidoADB(pedido)
+                sg.popup("¡Pedido anulado con exito!")
+
     window.close()
