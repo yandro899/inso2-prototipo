@@ -290,6 +290,21 @@ class ListaPedidos:
         with open("pedidos/{}.json".format(pedido.Id), "w") as outfile:
             outfile.write(json_object)
 
+    def BuscarPorEstado(self, estados: list[int]) -> list[PedidoAdquisicion]:
+        """
+        Devuelve una lista de pedidos con el/los estado(s) solicitado(s).
+        """
+        pedidos = []
+        for pedido in self.__pedidos:
+            if not isinstance(pedido, PedidoAdquisicion):
+                continue
+
+            if pedido.UltimoSeguimiento.Estado in estados:
+                pedidos.append(pedido)
+
+        return pedidos
+
+
     def CargarPedidosDB(self):
         """
         TODO: Implementar DB vagos.

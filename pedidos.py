@@ -100,7 +100,7 @@ def VerPedidos():
     elif (TiposUsuarios.EsSecretario()):
         new_contenido = contenido.copy()
         for prod in contenido:
-            if prod[2] != D.GetEstadoStr("5"):
+            if prod[2] != D.GetEstadoStr("2"):
                 new_contenido.remove(prod)
         contenido = new_contenido
 
