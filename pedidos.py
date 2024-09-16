@@ -104,6 +104,20 @@ def VerPedidos():
                 new_contenido.remove(prod)
         contenido = new_contenido
 
+    contenido_colors = []
+
+    for x in range(len(contenido)):
+        if contenido[x][2] == D.GetEstadoStr(11):
+            contenido_colors.append((x, "white", "black"))
+        elif contenido[x][2] == D.GetEstadoStr(1):
+            contenido_colors.append((x, "white", "#F58634"))
+        elif contenido[x][2] == D.GetEstadoStr(2):
+            contenido_colors.append((x, "black", "#FFC34C"))
+        elif contenido[x][2] == D.GetEstadoStr(5):
+            contenido_colors.append((x, "black", "#51FF00"))
+        elif contenido[x][2] == D.GetEstadoStr(6):
+            contenido_colors.append((x, "white", "red"))
+
     layout = [
         [sg.Menu(D.GetUserMenuBar())],
         [
@@ -114,7 +128,14 @@ def VerPedidos():
             sg.Frame("Nombre del solicitante", [[sg.Input(key="in_busqnombre", s=25)]]),
             sg.Frame("Estado", [[sg.Input(key="in_busqest", s=10)]])
         ],
-        [sg.Table(contenido, ['Datos del solicitante','Código','Estado','Creado','Concepto','Area actual'], num_rows=20, key="table_pedidos", enable_events=True)]
+        [sg.Table(
+            contenido, 
+            ['Datos del solicitante','Código','Estado','Creado','Concepto','Area actual'], 
+            num_rows=20, 
+            key="table_pedidos",
+            row_colors=contenido_colors,
+            enable_events=True
+            )]
     ]
 
     window = sg.Window("Ver pedidos", layout=layout)
@@ -225,10 +246,10 @@ def RevisarPedido(cod):
             color_seguimiento[2] = "c"
             break
 
-        if seg.Estado in [0, 1, 2]:
+        if seg.Estado in [0, 1]:
             color_seguimiento[0] = "a"
 
-        if seg.Estado in [3, 4]:
+        if seg.Estado in [2, 3, 4]:
             color_seguimiento[1] = "a"
 
         if seg.Estado in [5]:
@@ -296,5 +317,15 @@ def RevisarPedido(cod):
                 pedido.AnularPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido anulado con exito!")
+
+        if event == "btn_cancelar":
+            result = sg.popup_ok_cancel("¿Estas seguro de cancelar este pedido?")
+
+            if result == None or result == "Cancel":
+                break
+            elif result == "OK":
+                pedido.CancelarPedido()
+                g_ListaPedidos.GuardarPedidoADB(pedido)
+                sg.popup("¡Pedido cancelado con exito!")
 
     window.close()

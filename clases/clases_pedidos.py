@@ -95,6 +95,30 @@ class PedidoAdquisicion:
             datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             self
         ))
+
+    def CancelarPedido(self) -> bool:
+        """
+        Cancelar el pedido (debe estar en el estado de Enviado a Director).
+
+        Devuelve True si fue anulado con exito. False si fallo algo.
+        """
+        from globales import g_UsuarioActual
+        from datetime import datetime
+        
+        # Falla si el ultimo estado no es Enviado a Director
+        if self.UltimoSeguimiento.Estado != 1:
+            return False
+        
+        # Falla si el usuario no es un directivo del area de contabilidad
+        if not (g_UsuarioActual.Rol == 1 and g_UsuarioActual.Area == 0):
+            return False
+        
+        # Se agrega un nuevo seguimiento.
+        self.ListaSeguimientos.append(Seguimiento(
+            6,
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            self
+        ))
     
     def PreaprobarPedido(self) -> bool:
         """

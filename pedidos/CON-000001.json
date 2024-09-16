@@ -1,38 +1,28 @@
 {
-    "cod"   :   "CON-000001",
-    "dni"   :   "41653328",
-    "nombre" : "Nieto Leandro Martin",
-    "estado" : "2",
-    "fecha_creacion" : "2024-03-25 10:20:05",
-    "motivo" : "Falta de materiales básicos.\nNECESIDAD URGENTE.",
-    "observaciones" : "",
-    "concepto"  :   [
+    "cod": "CON-000001",
+    "dni": "41653328",
+    "nombre": "Nieto Leandro Martin",
+    "fecha_creacion": "2024-09-15 22:26:20",
+    "motivo": "Hay problemas con la falta de lapiceras.",
+    "observaciones": "",
+    "concepto": [
         {
-            "cant" : 2,
-            "prod" : "Mesa de escritorio"
+            "cant": 10,
+            "prod": "Lapiceras"
         },
         {
-            "cant" : 1,
-            "prod" : "Silla de oficina"
-        },
-        {
-            "cant" : 4,
-            "prod" : "Resmas hoja A4"
+            "cant": 3,
+            "prod": "Correctores"
         }
     ],
-    "area" : "Contabilidad",
-    "seguimiento" : [
+    "seguimiento": [
         {
-            "estado" : 0,
-            "fecha_cambio" : "2024-03-25 10:55:48"
+            "estado": 1,
+            "fecha_cambio": "2024-09-15 22:26:20"
         },
         {
-            "estado" : 1,
-            "fecha_cambio" : "2024-03-25 11:15:48"
-        },
-        {
-            "estado" : 2,
-            "fecha_cambio" : "2024-03-25 11:25:55"
+            "estado": 2,
+            "fecha_cambio": "2024-09-15 22:28:07"
         }
     ]
 }
