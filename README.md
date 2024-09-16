@@ -9,7 +9,8 @@
         return self.__dni
 ```
 * Cada ventana se crearia en un archivo aparte.
-* Version de Python que yo uso es 3.9
+* Version de Python que yo uso es 3.11
+* Instalen FreeSimpleGUI `pip install freesimplegui`
 * Al crear metodos o funciones, especificar cuál es su salida, agregar una descripcion de lo que hace y los tipos de dato de los argumentos.
 ` def BuscarUsuarioPorDNI(self, dni: str) -> Usuario | None:`
 * Preparense para llorar
