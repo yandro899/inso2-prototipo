@@ -275,7 +275,7 @@ def RevisarPedido(cod):
             sg.Image(filename="imagenes/seguimiento/inso_seguimiento_4{}.png".format(color_seguimiento[3]), pad=(0,0)),
             sg.Image(filename="imagenes/seguimiento/inso_seguimiento_5{}.png".format(color_seguimiento[4]), pad=(0,0)),
             sg.Image(filename="imagenes/seguimiento/inso_seguimiento_6{}.png".format(color_seguimiento[5]), pad=(0,0)),
-            sg.Table(seguimiento, ['Fecha y Hora','Estado'], num_rows=8)
+            sg.Table(seguimiento, ['Estado', 'Fecha y Hora'], num_rows=8)
         ]
     elif TiposUsuarios.EsDeCompras():
         parte_baja = [
