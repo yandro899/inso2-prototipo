@@ -1,0 +1,28 @@
+{
+    "cod": "CON-000005",
+    "dni": "41653328",
+    "nombre": "Nieto Leandro Martin",
+    "fecha_creacion": "2024-09-26 20:15:57",
+    "motivo": "Falta de papeles y tinta",
+    "observaciones": "",
+    "concepto": [
+        {
+            "cant": 4,
+            "prod": "Lapiceras BIC"
+        },
+        {
+            "cant": 4,
+            "prod": "Resmas hojas A4"
+        }
+    ],
+    "seguimiento": [
+        {
+            "estado": 1,
+            "fecha_cambio": "2024-09-26 20:15:57"
+        },
+        {
+            "estado": 2,
+            "fecha_cambio": "2024-09-26 20:18:09"
+        }
+    ]
+}

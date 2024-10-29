@@ -3,3 +3,7 @@
 /__pycache__
 /build
 .pyc
+pruebas.py
+clases/__pycache__/clases_pedidos.cpython-311.pyc
+clases/__pycache__/clases_usuarios.cpython-311.pyc
+clases/__pycache__/clases_utiles.cpython-311.pyc

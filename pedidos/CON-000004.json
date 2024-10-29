@@ -1,0 +1,24 @@
+{
+    "cod": "CON-000004",
+    "dni": "41653328",
+    "nombre": "Nieto Leandro Martin",
+    "fecha_creacion": "2024-09-17 23:37:18",
+    "motivo": "Falta de mesas",
+    "observaciones": "",
+    "concepto": [
+        {
+            "cant": 13,
+            "prod": "Gomas de borrar"
+        },
+        {
+            "cant": 2,
+            "prod": "Mesas de escritorio"
+        }
+    ],
+    "seguimiento": [
+        {
+            "estado": 1,
+            "fecha_cambio": "2024-09-17 23:37:18"
+        }
+    ]
+}

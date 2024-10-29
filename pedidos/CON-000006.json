@@ -1,0 +1,32 @@
+{
+    "cod": "CON-000006",
+    "dni": "41653328",
+    "nombre": "Nieto Leandro Martin",
+    "fecha_creacion": "2024-09-29 20:08:11",
+    "motivo": "Articulos de limpieza para los pasillos",
+    "observaciones": "",
+    "concepto": [
+        {
+            "cant": 3,
+            "prod": "trapos de piso"
+        },
+        {
+            "cant": 3,
+            "prod": "Ayudin"
+        },
+        {
+            "cant": 1,
+            "prod": "Detergente"
+        }
+    ],
+    "seguimiento": [
+        {
+            "estado": 1,
+            "fecha_cambio": "2024-09-29 20:08:11"
+        },
+        {
+            "estado": 2,
+            "fecha_cambio": "2024-09-29 20:11:41"
+        }
+    ]
+}
