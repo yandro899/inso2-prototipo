@@ -236,6 +236,8 @@ def RevisarPedido(cod):
         if not isinstance(seg, Seguimiento):
             continue
 
+        seguimiento.append([D.GetEstadoStr(seg.Estado), seg.FechaHoraEstado])
+        
         if seg.Estado == 11:
             color_seguimiento[0] = "c"
             break
@@ -265,7 +267,6 @@ def RevisarPedido(cod):
             color_seguimiento[4] = "a"
             color_seguimiento[5] = "a"
 
-        seguimiento.append([D.GetEstadoStr(seg.Estado), seg.FechaHoraEstado])
 
     if TiposUsuarios.EsDeContabilidad() or TiposUsuarios.EsSecretario():
         parte_baja = [
