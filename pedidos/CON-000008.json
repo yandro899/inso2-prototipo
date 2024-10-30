@@ -1,0 +1,24 @@
+{
+    "cod": "CON-000008",
+    "dni": "41653328",
+    "nombre": "Nieto Leandro Martin",
+    "fecha_creacion": "2024-10-30 10:50:58",
+    "motivo": "Leandea",
+    "observaciones": "",
+    "concepto": [
+        {
+            "cant": 3,
+            "prod": "Papas"
+        },
+        {
+            "cant": 2,
+            "prod": "Tomates"
+        }
+    ],
+    "seguimiento": [
+        {
+            "estado": 1,
+            "fecha_cambio": "2024-10-30 10:50:58"
+        }
+    ]
+}

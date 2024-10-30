@@ -21,11 +21,8 @@ def CrearPedido():
     layout_02 = [
         [sg.Button("Nuevo usuario", key="btn_newuser"), sg.Button("Generar pedido", key="btn_generarperdido")],
         [sg.Text("Lista de productos a pedir*:")],
-        [sg.Input(key="in_c1", s=10), sg.Input(key="in_p1", s=40)],
-        [sg.Input(key="in_c2", s=10), sg.Input(key="in_p2", s=40)],
-        [sg.Input(key="in_c3", s=10), sg.Input(key="in_p3", s=40)],
-        [sg.Input(key="in_c4", s=10), sg.Input(key="in_p4", s=40)],
-        [sg.Input(key="in_c5", s=10), sg.Input(key="in_p5", s=40)],
+        [sg.Text("Cantidad - Producto"), sg.Button("+", key="btn_crear_fila")],
+        [sg.Text("1"), sg.Input(key="in_c1", s=10), sg.Input(key="in_p1", s=40)]
     ]
     
     layout = [
@@ -37,16 +34,31 @@ def CrearPedido():
     window = sg.Window("Ventana principal", layout=layout)
 
     new_window = ""
+    c = 1
+    MAX_ROWS = 14
 
     while True:
         event, values = window.read()
         if event == sg.WINDOW_CLOSED or event == 'Salir':
             break
 
-        if values["in_c1"] == "":
+        if event == "btn_crear_fila":
+            if c >= MAX_ROWS:
+                continue
+
+            window.extend_layout(window['in_c1'].ParentContainer, [[sg.Text(f"{c+1}"), sg.Input(key=f"in_c{c+1}", s=10), sg.Input(key=f"in_p{c+1}", s=40)]])
+            c += 1
             continue
 
         if event == "btn_generarperdido":
+            # Controlar que la carga sea correcta
+            if values["in_motivo"] == "":
+                sg.popup("¡El motivo es obligatorio!")
+                continue
+            elif values["in_motivo"] == "":
+                sg.popup("¡El motivo es obligatorio!")
+                continue
+
             # Primero crear el pedido
             pedido = PedidoAdquisicion(g_ListaPedidos.ObtenerNuevoIDPedido(), datetime.now().strftime("%Y-%m-%d %H:%M:%S"), g_UsuarioActual.Dni, values["in_motivo"])
             pedido.Observaciones = values["in_observaciones"]
@@ -56,19 +68,40 @@ def CrearPedido():
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 
                 pedido
             ))
+            error = False
             # guardar conceptos
-            for i in range(1,6):
-                if len(values["in_c{}".format(i)]) != 0 and len(values["in_p{}".format(i)]) != 0:
+            for i in range(1,c+1):
+                nombre_concepto = values["in_p{}".format(i)]
+                cant_concepto = str(values["in_c{}".format(i)])
+
+                if len(cant_concepto) != 0 and len(nombre_concepto) != 0:
+                    if not cant_concepto.isdigit():
+                        sg.popup("¡Ingrese numeros en la cantidad!")
+                        error = True
+                        break
+
+                    cant_concepto_int = int(cant_concepto)
+                    if (cant_concepto_int <= 0):
+                        sg.popup("¡No ingrese numeros menores o iguales a cero!")
+                        error = True
+                        break
+                    
                     pedido.ListaConceptos.append(Concepto(
-                        values["in_p{}".format(i)],
-                        int(values["in_c{}".format(i)])
+                        nombre_concepto,
+                        cant_concepto_int
                     ))
+
+            if error or c == 1:
+                continue
+
             # luego guardarlo en la lista
             g_ListaPedidos.AgregarPedidoALista(pedido)
             # guardarlo en DB
             g_ListaPedidos.GuardarPedidoADB(pedido)
             # mostrar el pedido
             new_window = "rp"
+            # Avisar creacion de pedido
+            sg.popup("¡El pedido se ha creado correctamente!")
             break
 
         if event == "Menu Principal":
