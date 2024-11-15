@@ -133,17 +133,10 @@ class ListaUsuarios:
         Carga datos desde la base de datos de mongo DB online
         """
 
-        from pymongo import MongoClient
-        from pymongo.cursor import Cursor
-
-        # Reemplaza <username>, <password> y <cluster-url> con tus credenciales y URL del clúster
-        client = MongoClient("mongodb+srv://41653328:7cptheLz4s2LlvsN@clusterinso2g6.rqpj2.mongodb.net/?retryWrites=true&w=majority&appName=ClusterINSO2G6")
-
-        # Selecciona la base de datos
-        db = client["inso2_SIGEAD"]
+        from globales import g_MongoDBClient
 
         # Selecciona la colección
-        collection = db["usuarios"]
+        collection = g_MongoDBClient["usuarios"]
 
         # Iterar sobre todos los documentos de la colección
         for documento in collection.find():
