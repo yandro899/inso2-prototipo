@@ -130,15 +130,31 @@ class ListaUsuarios:
 
     def CargarUsuariosDB(self):
         """
-        TODO: debe cargar todos los usuarios de alguna base de datos.
-        En este caso lo cargamos desde los json xd.
+        Carga datos desde la base de datos de mongo DB online
         """
-        import json
 
-        f = open("usuarios/usuarios.json")
-        usersjson = json.load(f)
-        self.__usuarios.clear()
-        
-        for user in usersjson:
-            userclass = Usuario(user["dni"], user["pass"], user["name"], int(user["rol"]), int(user["area"]), user["legajo"], user["mail"])
+        from pymongo import MongoClient
+        from pymongo.cursor import Cursor
+
+        # Reemplaza <username>, <password> y <cluster-url> con tus credenciales y URL del clúster
+        client = MongoClient("mongodb+srv://41653328:7cptheLz4s2LlvsN@clusterinso2g6.rqpj2.mongodb.net/?retryWrites=true&w=majority&appName=ClusterINSO2G6")
+
+        # Selecciona la base de datos
+        db = client["inso2_SIGEAD"]
+
+        # Selecciona la colección
+        collection = db["usuarios"]
+
+        # Iterar sobre todos los documentos de la colección
+        for documento in collection.find():
+            userclass = Usuario(
+                documento.get("dni"), 
+                documento.get("pass"), 
+                documento.get("name"), 
+                int(documento.get("rol")), 
+                int(documento.get("area")), 
+                documento.get("legajo"), 
+                documento.get("mail")
+                )
             self.__usuarios.append(userclass)
+        
