@@ -63,7 +63,7 @@ def VentanaInicioSesion() -> bool:
             passw = values["in_passw"]
 
             if not g_ListaUsuarios.AutenticarUsuario(dni, passw):
-                print("El usuario o la contraseña son incorrectos.")
+                sg.popup("¡El usuario o la contraseña son incorrectos!")
                 continue
 
             success = True

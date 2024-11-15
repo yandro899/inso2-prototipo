@@ -110,7 +110,7 @@ class PedidoAdquisicion:
             return False
         
         # Falla si el usuario no es un directivo del area de contabilidad
-        if not (g_UsuarioActual.Rol == 1 and g_UsuarioActual.Area == 0):
+        if not (g_UsuarioActual.Rol == 0 and g_UsuarioActual.Area == 0):
             return False
         
         # Se agrega un nuevo seguimiento.
@@ -267,12 +267,11 @@ class ListaPedidos:
         """
         Devuelve el ultimo ID de pedido de adquisicion disponible para usar.
         """
-        import os
+        from globales import g_MongoDBClient
 
-        # Iterar sobre todos los archivos en la carpeta
-        carpeta = "pedidos"
-        cant = len(os.listdir(carpeta)) + 1
-        cad = str(cant)
+        # Selecciona la colección
+        collection = g_MongoDBClient["pedidos"]
+        cad = str(collection.count_documents({})+1)
         while len(cad) < 6:
             cad = "0{}".format(cad)
 
@@ -283,7 +282,12 @@ class ListaPedidos:
         """
         Funcion que guarda el pedido en la base de datos.
         """
-        import json
+        from globales import g_MongoDBClient
+
+        # Selecciona la colección
+        collection = g_MongoDBClient["pedidos"]
+        
+        filtro = {"cod"   :   pedido.Id}
 
         pedido_json = {
             "cod"   :   pedido.Id,
@@ -308,11 +312,7 @@ class ListaPedidos:
 
             pedido_json["seguimiento"].append(seguimiento.SeguimientoADict())
 
-        json_object = json.dumps(pedido_json, indent=4)
-
-        # Writing to sample.json
-        with open("pedidos/{}.json".format(pedido.Id), "w") as outfile:
-            outfile.write(json_object)
+        collection.update_one(filtro, {"$set" : pedido_json}, upsert=True)
 
     def BuscarPorEstado(self, estados: list[int]) -> list[PedidoAdquisicion]:
         """
@@ -333,29 +333,26 @@ class ListaPedidos:
         """
         TODO: Implementar DB vagos.
         """
-        import os
-        import json
-        
+        from globales import g_MongoDBClient
+
         self.__pedidos.clear()
 
-        # Iterar sobre todos los archivos en la carpeta
-        carpeta = "pedidos"
-        for archivo in os.listdir(carpeta):
-            if archivo.endswith('.json'):
-                ruta_archivo = os.path.join(carpeta, archivo)
+        # Selecciona la colección
+        collection = g_MongoDBClient["pedidos"]
 
-                f = open(ruta_archivo)
-                pedidojson = json.load(f)
-                pedido = PedidoAdquisicion(pedidojson["cod"], pedidojson["fecha_creacion"], pedidojson["dni"], pedidojson["motivo"])
-                pedido.Observaciones = pedidojson["observaciones"]
+        # Iterar sobre todos los documentos de la colección
+        for documento in collection.find():
+            pedido = PedidoAdquisicion(documento.get("cod"), documento.get("fecha_creacion"), documento.get("dni"), documento.get("motivo"))
+            pedido.Observaciones = documento.get("observaciones")
 
-                for concepto_json in pedidojson["concepto"]:
-                    concepto = Concepto(concepto_json["prod"], concepto_json["cant"])
+            for concepto_json in documento.get("concepto"):
+                    concepto = Concepto(concepto_json.get("prod"), concepto_json.get("cant"))
                     pedido.ListaConceptos.append(concepto)
                 
-                for seguimiento_json in pedidojson["seguimiento"]:
-                    seguimiento = Seguimiento(seguimiento_json["estado"], seguimiento_json["fecha_cambio"], pedido)
-                    pedido.ListaSeguimientos.append(seguimiento)
-                
-                self.__pedidos.append(pedido)
+            for seguimiento_json in documento.get("seguimiento"):
+                seguimiento = Seguimiento(seguimiento_json.get("estado"), seguimiento_json.get("fecha_cambio"), pedido)
+                pedido.ListaSeguimientos.append(seguimiento)
+            
+            self.__pedidos.append(pedido)
+
     

@@ -130,15 +130,24 @@ class ListaUsuarios:
 
     def CargarUsuariosDB(self):
         """
-        TODO: debe cargar todos los usuarios de alguna base de datos.
-        En este caso lo cargamos desde los json xd.
+        Carga datos desde la base de datos de mongo DB online
         """
-        import json
 
-        f = open("usuarios/usuarios.json")
-        usersjson = json.load(f)
-        self.__usuarios.clear()
-        
-        for user in usersjson:
-            userclass = Usuario(user["dni"], user["pass"], user["name"], int(user["rol"]), int(user["area"]), user["legajo"], user["mail"])
+        from globales import g_MongoDBClient
+
+        # Selecciona la colección
+        collection = g_MongoDBClient["usuarios"]
+
+        # Iterar sobre todos los documentos de la colección
+        for documento in collection.find():
+            userclass = Usuario(
+                documento.get("dni"), 
+                documento.get("pass"), 
+                documento.get("name"), 
+                int(documento.get("rol")), 
+                int(documento.get("area")), 
+                documento.get("legajo"), 
+                documento.get("mail")
+                )
             self.__usuarios.append(userclass)
+        
