@@ -55,7 +55,7 @@ def VentanaPrincipal():
 
     window.close()
 
-    GoToWindow(new_window)
+    GoToWindow(new_window, omitir="vp")
     # elif new_window == "vprod":
     #     C.VerProductos()
     # elif new_window == "dprod":
