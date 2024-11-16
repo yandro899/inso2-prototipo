@@ -1,11 +1,18 @@
 import FreeSimpleGUI as sg
 from clases.clases_utiles import TiposUsuarios
 from index import GoToWindow
-from defs import GetUserMenuBar
+from defs import GetUserMenuBar, ObtenerNotificaciones
 
 def VentanaPrincipal():
+
+    notif_key = ObtenerNotificaciones()
+    notif_img = "imagenes/inso19.png"
+    if notif_key in ["rp"]:
+        notif_img = "imagenes/inso18.png"
+    
     layout = [
         [sg.Menu(GetUserMenuBar())],
+        [sg.Push(), sg.Button(image_filename=notif_img, image_size=(32,32), key=notif_key)],
         [
             sg.Button(image_filename="imagenes/inso7.png", image_size=(256,256), key="btn_nuevopedido", visible=(TiposUsuarios.EsDeContabilidad() and TiposUsuarios.EsAdministrativo())), 
             sg.Button(image_filename="imagenes/inso6.png", image_size=(256,256), key="btn_revisarpedidos", visible=(not (TiposUsuarios.EsDeCompras() and TiposUsuarios.EsDirectivo())))
@@ -30,7 +37,7 @@ def VentanaPrincipal():
             new_window = "np"
             break
 
-        if event == "btn_revisarpedidos":
+        if event in ["btn_revisarpedidos", "rp"]:
             new_window = "rp"
             break
 

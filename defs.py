@@ -6,8 +6,7 @@ def GetUserMenuBar() -> list:
         ["Inicio", ["Menu Principal", "Cerrar sesión", "Salir"]], 
         ["Pedidos de adquisición", ["Crear nuevo pedido", "Revisar pedidos"]], 
         ["Usuarios", ["Ver usuarios"]],
-        [g_UsuarioActual.Nombre, ["DNI {}".format(g_UsuarioActual.Dni)]],
-        ObtenerNotificaciones()
+        [g_UsuarioActual.Nombre, ["DNI {}".format(g_UsuarioActual.Dni)]]
         ]
 
 def GetEstadoStr(cod: int) -> str:
@@ -18,7 +17,7 @@ def GetEstadoStr(cod: int) -> str:
 
     return estados[str(cod)]
 
-def ObtenerNotificaciones() -> list:
+def ObtenerNotificaciones() -> str:
     """
     Obtiene notificaciones de pedidos con cambio de estado.
     """
@@ -29,12 +28,12 @@ def ObtenerNotificaciones() -> list:
     if TiposUsuarios.EsDirectivo() and TiposUsuarios.EsDeContabilidad():
         pedidos = g_ListaPedidos.BuscarPorEstado([1])
         if len(pedidos) != 0:
-            return ["HAY NUEVAS NOTIFICACIONES", ["Tiene nuevos pedidos para revisar::vp"]]
+            return "rp"
         
     # Secretario
     if TiposUsuarios.EsSecretario():
         pedidos = g_ListaPedidos.BuscarPorEstado([2])
         if len(pedidos) != 0:
-            return ["HAY NUEVAS NOTIFICACIONES", ["Tiene nuevos pedidos para revisar::vp"]]
+            return "rp"
         
-    return ["Sin notificaciones"]
+    return "none"
