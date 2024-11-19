@@ -81,12 +81,13 @@ class PedidoAdquisicion:
         from globales import g_UsuarioActual
         from datetime import datetime
         
-        # Falla si el ultimo estado no es Enviado a Director
-        if self.UltimoSeguimiento.Estado != 1:
+        # Falla si el ultimo estado no es Enviado a Director o preaprobado
+        if not self.UltimoSeguimiento.Estado in [1, 2]:
             return False
         
-        # Falla si el usuario no es un directivo del area de contabilidad
-        if not (g_UsuarioActual.Rol == 1 and g_UsuarioActual.Area == 0):
+        # Falla si el usuario no es un directivo del area de contabilidad o secretario
+        #if not (g_UsuarioActual.Rol == 1 and g_UsuarioActual.Area == 0) or not g_UsuarioActual.Rol == 2:
+        if not (g_UsuarioActual.Rol == 1 and g_UsuarioActual.Area == 0) and not g_UsuarioActual.Rol == 2:
             return False
         
         # Se agrega un nuevo seguimiento.
