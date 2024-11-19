@@ -90,8 +90,12 @@ def CrearPedido():
                         nombre_concepto,
                         cant_concepto_int
                     ))
+                else:
+                    error = True
+                    sg.popup("¡No deje campos en blanco!")
+                    break
 
-            if error or c == 1:
+            if error:
                 continue
 
             # luego guardarlo en la lista
