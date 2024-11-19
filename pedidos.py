@@ -1,6 +1,7 @@
 import FreeSimpleGUI as sg
 from index import GoToWindow
 from clases.clases_utiles import TiposUsuarios
+from clases.clases_pedidos import PedidoAdquisicion
 import defs as D
 
 def CrearPedido():
@@ -187,7 +188,9 @@ def VerPedidos():
         if event == "table_pedidos":
             selected_row_index = values['table_pedidos'][0]
             cod = contenido[selected_row_index][1]
+            new_window = "rp"
             RevisarPedido(cod)
+            break
 
         if event == "btn_nuevopedido":
             new_window = "np"
@@ -201,11 +204,8 @@ def VerPedidos():
 
     GoToWindow(new_window)
 
-def RevisarPedido(cod):
+def EstructuraRevisarPedido(pedido: PedidoAdquisicion) -> list:
     from clases.clases_pedidos import Concepto, Seguimiento
-    from globales import g_ListaPedidos
-
-    pedido = g_ListaPedidos.BuscarPedidoAdquision(cod)
 
     layout_01 = [
         [sg.Text("DETALLE PEDIDO")],
@@ -329,6 +329,15 @@ def RevisarPedido(cod):
         parte_baja
     ]
 
+    return layout
+
+def RevisarPedido(cod):
+    from globales import g_ListaPedidos
+
+    pedido = g_ListaPedidos.BuscarPedidoAdquision(cod)
+
+    layout = EstructuraRevisarPedido(pedido)
+
     window = sg.Window("Ver pedido {}".format(pedido.Id), layout=layout)
 
     while True:
@@ -345,6 +354,7 @@ def RevisarPedido(cod):
                 pedido.PreaprobarPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido preaprobado con exito!")
+                break
 
         if event == "btn_anular":
             result = sg.popup_ok_cancel("¿Estas seguro de anular este pedido?")
@@ -355,6 +365,7 @@ def RevisarPedido(cod):
                 pedido.AnularPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido anulado con exito!")
+                break
 
         if event == "btn_cancelar":
             result = sg.popup_ok_cancel("¿Estas seguro de cancelar este pedido?")
@@ -365,5 +376,6 @@ def RevisarPedido(cod):
                 pedido.CancelarPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido cancelado con exito!")
+                break
 
     window.close()
