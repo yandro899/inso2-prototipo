@@ -362,9 +362,9 @@ def RevisarPedido(cod):
             if result == None or result == "Cancel":
                 break
             elif result == "OK":
-                #pedido.PreaprobarPedido()
-                #g_ListaPedidos.GuardarPedidoADB(pedido)
-                #sg.popup("¡Pedido preaprobado con exito!")
+                pedido.AprobarPedido()
+                g_ListaPedidos.GuardarPedidoADB(pedido)
+                sg.popup("¡Pedido aprobado con exito!")
                 break
 
         if event == "btn_anular":
