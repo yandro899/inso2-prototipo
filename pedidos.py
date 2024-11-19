@@ -277,12 +277,13 @@ def EstructuraRevisarPedido(pedido: PedidoAdquisicion) -> list:
         
         if seg.Estado == 11:
             color_seguimiento[0] = "c"
+            for i in range(len(color_seguimiento)):
+                if color_seguimiento[i] == "a":
+                    color_seguimiento[i] = "c"
             break
 
         if seg.Estado == 6:
             color_seguimiento[0] = "c"
-            color_seguimiento[1] = "c"
-            color_seguimiento[2] = "c"
             break
 
         if seg.Estado in [0, 1]:
