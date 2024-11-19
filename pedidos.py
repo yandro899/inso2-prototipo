@@ -246,7 +246,7 @@ def EstructuraRevisarPedido(pedido: PedidoAdquisicion) -> list:
     buttons = []
 
     if TiposUsuarios.EsDeContabilidad() or TiposUsuarios.EsSecretario():
-        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado == 4:
+        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado in [2, 3, 4]:
             buttons = [sg.Button("Aprobar", k="btn_aprobar"), sg.Button("Anular", k="btn_anular")]
         elif TiposUsuarios.EsAdministrativo() and pedido.UltimoSeguimiento.Estado in [0, 1]:
             buttons = [sg.Button("Cancelar", k="btn_cancelar")]
@@ -354,6 +354,17 @@ def RevisarPedido(cod):
                 pedido.PreaprobarPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido preaprobado con exito!")
+                break
+
+        if event == "btn_aprobar":
+            result = sg.popup_ok_cancel("¿Estas seguro de aprobar este pedido?")
+
+            if result == None or result == "Cancel":
+                break
+            elif result == "OK":
+                #pedido.PreaprobarPedido()
+                #g_ListaPedidos.GuardarPedidoADB(pedido)
+                #sg.popup("¡Pedido preaprobado con exito!")
                 break
 
         if event == "btn_anular":
