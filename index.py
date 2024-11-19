@@ -1,7 +1,11 @@
-def GoToWindow(new_window: str):
+def GoToWindow(new_window: str, omitir=""):
     from pedidos import VerPedidos, CrearPedido
     from ventana_principal import VentanaPrincipal
     from usuarios import VerUsuarios
+
+    # Para no abrir la misma ventana dos veces
+    if omitir == new_window:
+        return
 
     if new_window == "np":
         CrearPedido()
