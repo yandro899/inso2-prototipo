@@ -6,7 +6,4 @@ g_ListaUsuarios.CargarUsuariosDB()
 
 if VentanaInicioSesion():
     g_ListaPedidos.CargarPedidosDB()
-    print("se inicio sesion")
     VentanaPrincipal()
-else:
-    print("no")

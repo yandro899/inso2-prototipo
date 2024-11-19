@@ -1,6 +1,7 @@
 import FreeSimpleGUI as sg
 from index import GoToWindow
 from clases.clases_utiles import TiposUsuarios
+from clases.clases_pedidos import PedidoAdquisicion
 import defs as D
 
 def CrearPedido():
@@ -90,8 +91,12 @@ def CrearPedido():
                         nombre_concepto,
                         cant_concepto_int
                     ))
+                else:
+                    error = True
+                    sg.popup("¡No deje campos en blanco!")
+                    break
 
-            if error or c == 1:
+            if error:
                 continue
 
             # luego guardarlo en la lista
@@ -183,7 +188,9 @@ def VerPedidos():
         if event == "table_pedidos":
             selected_row_index = values['table_pedidos'][0]
             cod = contenido[selected_row_index][1]
+            new_window = "rp"
             RevisarPedido(cod)
+            break
 
         if event == "btn_nuevopedido":
             new_window = "np"
@@ -197,11 +204,8 @@ def VerPedidos():
 
     GoToWindow(new_window)
 
-def RevisarPedido(cod):
+def EstructuraRevisarPedido(pedido: PedidoAdquisicion) -> list:
     from clases.clases_pedidos import Concepto, Seguimiento
-    from globales import g_ListaPedidos
-
-    pedido = g_ListaPedidos.BuscarPedidoAdquision(cod)
 
     layout_01 = [
         [sg.Text("DETALLE PEDIDO")],
@@ -242,7 +246,7 @@ def RevisarPedido(cod):
     buttons = []
 
     if TiposUsuarios.EsDeContabilidad() or TiposUsuarios.EsSecretario():
-        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado == 4:
+        if TiposUsuarios.EsSecretario() and pedido.UltimoSeguimiento.Estado in [2, 3, 4]:
             buttons = [sg.Button("Aprobar", k="btn_aprobar"), sg.Button("Anular", k="btn_anular")]
         elif TiposUsuarios.EsAdministrativo() and pedido.UltimoSeguimiento.Estado in [0, 1]:
             buttons = [sg.Button("Cancelar", k="btn_cancelar")]
@@ -325,6 +329,15 @@ def RevisarPedido(cod):
         parte_baja
     ]
 
+    return layout
+
+def RevisarPedido(cod):
+    from globales import g_ListaPedidos
+
+    pedido = g_ListaPedidos.BuscarPedidoAdquision(cod)
+
+    layout = EstructuraRevisarPedido(pedido)
+
     window = sg.Window("Ver pedido {}".format(pedido.Id), layout=layout)
 
     while True:
@@ -341,6 +354,18 @@ def RevisarPedido(cod):
                 pedido.PreaprobarPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido preaprobado con exito!")
+                break
+
+        if event == "btn_aprobar":
+            result = sg.popup_ok_cancel("¿Estas seguro de aprobar este pedido?")
+
+            if result == None or result == "Cancel":
+                break
+            elif result == "OK":
+                pedido.AprobarPedido()
+                g_ListaPedidos.GuardarPedidoADB(pedido)
+                sg.popup("¡Pedido aprobado con exito!")
+                break
 
         if event == "btn_anular":
             result = sg.popup_ok_cancel("¿Estas seguro de anular este pedido?")
@@ -351,6 +376,7 @@ def RevisarPedido(cod):
                 pedido.AnularPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido anulado con exito!")
+                break
 
         if event == "btn_cancelar":
             result = sg.popup_ok_cancel("¿Estas seguro de cancelar este pedido?")
@@ -361,5 +387,6 @@ def RevisarPedido(cod):
                 pedido.CancelarPedido()
                 g_ListaPedidos.GuardarPedidoADB(pedido)
                 sg.popup("¡Pedido cancelado con exito!")
+                break
 
     window.close()
