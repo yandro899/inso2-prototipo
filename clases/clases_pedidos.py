@@ -146,6 +146,30 @@ class PedidoAdquisicion:
 
         # TODO: Agregar firma electronica
 
+    def AprobarPedido(self) -> bool:
+        """
+        Aprueba el pedido (debe estar en el estado de Preaprobado).
+
+        Devuelve True si fue aprobado con exito. False si fallo algo.
+        """
+        from globales import g_UsuarioActual
+        from datetime import datetime
+        
+        # Falla si el ultimo estado no es Preaprobado
+        if self.UltimoSeguimiento.Estado != 2:
+            return False
+        
+        # Falla si el usuario no es un secretario
+        if not g_UsuarioActual.Rol == 2:
+            return False
+        
+        # Se agrega un nuevo seguimiento.
+        self.ListaSeguimientos.append(Seguimiento(
+            5,
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            self
+        ))
+
     
 class Concepto:
     """
