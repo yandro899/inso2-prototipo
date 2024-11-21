@@ -10,9 +10,9 @@ def VentanaPrincipal():
     if notif_key in ["rp"]:
         notif_img = "imagenes/inso18.png"
     
-    layout = [
-        [sg.Menu(GetUserMenuBar())],
-        [sg.Push(), sg.Button(image_filename=notif_img, image_size=(32,32), key=notif_key)],
+    layout_1 = [[sg.Image(filename="imagenes/logo.png")]]
+
+    layout_2 = [
         [
             sg.Button(image_filename="imagenes/inso7.png", image_size=(256,256), key="btn_nuevopedido", visible=(TiposUsuarios.EsDeContabilidad() and TiposUsuarios.EsAdministrativo())), 
             sg.Button(image_filename="imagenes/inso6.png", image_size=(256,256), key="btn_revisarpedidos", visible=(not (TiposUsuarios.EsDeCompras() and TiposUsuarios.EsDirectivo())))
@@ -22,6 +22,12 @@ def VentanaPrincipal():
             sg.Button(image_filename="imagenes/inso4.png", image_size=(256,256), key="btn_verproductos", visible=(TiposUsuarios.EsDeCompras() and TiposUsuarios.EsAdministrativo())),
             sg.Button(image_filename="imagenes/inso2.png", image_size=(256,256), key="btn_devproductos", visible=(TiposUsuarios.EsDeCompras() and TiposUsuarios.EsAdministrativo()))
         ]
+    ]
+    
+    layout = [
+        [sg.Menu(GetUserMenuBar())],
+        [sg.Push(), sg.Button(image_filename=notif_img, image_size=(32,32), key=notif_key)],
+        [sg.Column(layout=layout_1, p=0), sg.Column(layout=layout_2, p=0)]
     ]
 
     window = sg.Window("Ventana principal", layout=layout)
